@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -14,8 +15,10 @@ namespace WPFGameShop
     {
         ObservableCollection<GameModel> gameModelList;
 
-        ICommand seeMoreCommand;
-        ICommand editImageCommand;
+        
+
+       
+    
 
         public ObservableCollection<GameModel> GameModelList
         {
@@ -45,38 +48,12 @@ namespace WPFGameShop
 
 
         public GameListViewModel(ObservableCollection<GameModel> models) => gameModelList = new ObservableCollection<GameModel>(models);
-        public ICommand SeeMoreCommand => seeMoreCommand ??= new DelegateCommand(
+        public ICommand SeeMoreCommand => new DelegateCommand(
                      param => SeeMore(),
                      param => (SelectedItem is not null)
                  );
 
 
-        public ICommand EditImageCommand =>  editImageCommand ??= new DelegateCommand(
-                     param => EditImage(),
-                     param => (SelectedItem is not null)
-                 );
-
-
-        void EditImage()
-        {
-
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            dlg.DefaultExt = ".jpg";
-            dlg.Filter = "Image Files| *.jpg; *.jpeg; *.png; *.gif; *.tif; ...";
-
-
-
-            var result = dlg.ShowDialog();
-
-
-            if (result == true)
-            {
-
-                SelectedItem.Cover = File.ReadAllBytes(dlg.FileName);
-            }
-
-        }
 
         void SeeMore()
         {
@@ -85,4 +62,113 @@ namespace WPFGameShop
         }
 
     }
+
+
+    public class SelectedGameViewModel : BindableBase
+    {
+
+
+        GameModel selectedGame;
+
+
+
+        public GameModel SelectedGame
+        {
+            get => selectedGame;
+
+            set
+            {
+                if (selectedGame != value)
+                {
+                    
+                    selectedGame = value;
+                    NotifyPropertyChanged();
+                }
+               
+            }
+        }
+
+
+    
+        public ICommand DropCommand =>   new DelegateCommand(
+                     param => DropEvent(param as DragEventArgs),
+                     param => (SelectedGame is not null)
+                 );
+
+        public ICommand DragEnterCommand =>   new DelegateCommand(
+                     param => DragEnterEvent(),
+                     param => (SelectedGame is not null)
+                 );
+        public ICommand DragLeaveCommand =>  new DelegateCommand(
+                     param => DragLeaveEvent(),
+                     param => (SelectedGame is not null)
+                 );
+
+        public ICommand BrowseImageCommand => new DelegateCommand(
+                     param => BrowseImageEvent(),
+                     param => (SelectedGame is not null)
+                 );
+
+
+
+
+        bool entered = false;
+        public bool Entered
+        {
+            get => entered;
+            set
+            {
+                if (entered != value)
+                {
+                    entered = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private void BrowseImageEvent()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.png;*.bmp;*.tiff;"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedGame.Cover = File.ReadAllBytes(openFileDialog.FileName);
+            }
+        }
+
+        private void DragLeaveEvent() => Entered = false;
+
+        private void DragEnterEvent() => Entered = true;
+
+        private void DropEvent(DragEventArgs obj)
+        {
+            try
+            {
+                
+                Entered = false;
+
+                if (obj.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var files = obj.Data.GetData(DataFormats.FileDrop, true) as string[];
+                    SelectedGame.Cover = File.ReadAllBytes(files.Last());
+                    //NotifyPropertyChanged(nameof(SelectedGame));
+                }
+              
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n\n" + ex.Source);
+            }
+        }
+
+      
+
+    }
 }
+
+
+

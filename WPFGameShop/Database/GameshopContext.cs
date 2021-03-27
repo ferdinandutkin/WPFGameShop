@@ -10,7 +10,7 @@ namespace WPFGameShop
     public partial class GameshopContext : DbContext
     {
 
-        string connectionString = @"Data Source=.\SQLEXPRESS;Trusted_Connection=Yes;DataBase=GameShop;";
+        readonly string connectionString = @"Data Source=.\SQLEXPRESS;Trusted_Connection=Yes;DataBase=GameShop;";
         public GameshopContext()
         {
         }
@@ -20,6 +20,7 @@ namespace WPFGameShop
         {
         }
 
+        public virtual DbSet<Discount> Discount { get; set; }
         public virtual DbSet<EarlyAccesGame> EarlyAccesGame { get; set; }
         public virtual DbSet<Game> Game { get; set; }
         public virtual DbSet<GameGenre> GameGenre { get; set; }
@@ -29,6 +30,12 @@ namespace WPFGameShop
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Cyrillic_General_CI_AS");
+
+            modelBuilder.Entity<Discount>(entity =>
+            {
+                entity.HasKey(e => e.GameId)
+                    .HasName("PK_Sale");
+            });
 
             modelBuilder.Entity<EarlyAccesGame>(entity =>
             {
@@ -50,8 +57,8 @@ namespace WPFGameShop
         {
             base.OnConfiguring(optionsBuilder);
 
-     
-                optionsBuilder.UseSqlServer(connectionString);
+
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 }

@@ -1,11 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFGameShop
 {
+
+    public class GenreNameModel : BindableBase
+    {
+
+    }
+
+
+    public class Prop<T> : BindableBase
+    {
+        private T _value;
+
+        public Prop(T val) => _value = val;
+
+        public static implicit operator Prop<T>(T val) => new(val);
+        public T Value
+        {
+            get => _value;
+            set { 
+                if (!_value.Equals(value))
+                {
+                    NotifyPropertyChanged();
+                    _value = value;
+                }
+                    
+            }
+
+        }
+    }
+
+    public class PropString : Prop<string>
+    {
+        public PropString(string s) : base(s) { }
+    }
     public class GameModel : BindableBase
     {
       
@@ -19,7 +53,9 @@ namespace WPFGameShop
         private int discount;
         private bool isEarlyAccess;
 
-        private List<string> genres;
+
+
+        private ObservableCollection<Prop<string>> genres;
 
     
         public int Discount
@@ -35,7 +71,7 @@ namespace WPFGameShop
             }
         }
 
-        public List<string> Genres
+        public ObservableCollection<Prop<string>> Genres
         {
             get => genres;
             set
@@ -81,8 +117,9 @@ namespace WPFGameShop
             {
                 if (value != cover)
                 {
-                    cover = value;
                     NotifyPropertyChanged();
+                    cover = value;
+                  
                 }
 
             }

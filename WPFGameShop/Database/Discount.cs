@@ -9,13 +9,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WPFGameShop
 {
-    public partial class GameGenre
+    public partial class Discount
     {
-        [Column("GameID")]
-        public int GameId { get; set; }
-        [Column("GenreID")]
-        public int GenreId { get; set; }
         [Key]
-        public int Id { get; set; }
+        public int GameId { get; set; }
+        public int Percantage { get; set; }
     }
 }

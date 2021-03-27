@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:local="clr-namespace:WPFGameShop" xmlns:wpfcontrollibrary="clr-namespace:WpfControlLibrary;assembly=UserControls">
 
-	<DataTemplate DataType="{x:Type local:GameModel}" x:Key="ListBoxItem">
+	<DataTemplate DataType="{x:Type local:GameModel}" x:Key="GameListBoxItem">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition  Height="*"/>
@@ -11,8 +11,9 @@
 				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
+				<ColumnDefinition MinWidth="300"/>
+				<ColumnDefinition />
+
 			</Grid.ColumnDefinitions>
 			<Grid.Resources>
 				<local:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapСonverter"/>
@@ -21,32 +22,32 @@
 
 
 
-			<Image Grid.Column="0" Grid.Row="0"  Grid.RowSpan="3" Height="200" Width="80"
+			<Image Grid.Column="0" Grid.Row="0"  Grid.RowSpan="3" Height="200" Width="80" HorizontalAlignment="Left"
 							   Source="{Binding Path=Cover, Converter={StaticResource ByteArrayToBitmapСonverter}}">
 
 
 			</Image>
-			<TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Name}"/>
+			<TextBlock Grid.Row="0" Grid.Column="0" FontSize="40" Text="{Binding Name}"/>
 
 
-			<wpfcontrollibrary:RatingControl Grid.Column="1"  Grid.Row ="1"  Height="30" Value="{Binding Rating}" IsEnabled="False"/>
-			<wpfcontrollibrary:PriceControl Price="{Binding Price}" Discount="{Binding Discount}"/>
-			<ListBox Grid.Row="2" Grid.Column="1" Background="Transparent">
+			<wpfcontrollibrary:RatingControl Grid.Row="0" Grid.Column="1"  Height="40" Value="{Binding Rating}" IsEnabled="False" />
+			<wpfcontrollibrary:PriceControl Grid.Column="1" Price="{Binding Price}" Discount="{Binding Discount}"  Grid.Row="2"/>
+			<ListBox Grid.Column="1" Background="Transparent" Margin="0,112,0,0" Grid.RowSpan="2" ItemsSource="{Binding Genres}">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type local:PropString}">
+						<TextBlock  Text="{Binding Value}"/>
+
+
+
+					</DataTemplate>
+			</ListBox.ItemTemplate>
 				<ListBox.ItemsPanel>
 					<ItemsPanelTemplate >
 						<StackPanel Orientation="Horizontal" Background="Transparent"></StackPanel>
 					</ItemsPanelTemplate>
 
 				</ListBox.ItemsPanel>
-				<ListBoxItem>
-					"ffffff"
-				</ListBoxItem>
-				<ListBoxItem>
-					"ffffff"
-				</ListBoxItem>
-				<ListBoxItem>
-					"ffffff"
-				</ListBoxItem>
+ 
 
 
 
@@ -54,8 +55,6 @@
 
 			</ListBox>
 		</Grid>
-
-
 	</DataTemplate>
 
 </ResourceDictionary>

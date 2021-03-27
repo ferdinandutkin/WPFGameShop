@@ -10,16 +10,21 @@
 		<Binding RelativeSource="{RelativeSource Self}"/>
 	</Window.DataContext>
     <Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
 
-		<ListBox x:Name="List" ItemsSource="{Binding Path =GameListViewModel.GameModelList}"
-				  SelectedItem="{Binding Path= GameListViewModel.SelectedItem}" Background="Transparent"
-				 ItemTemplate="{StaticResource ListBoxItem}">
-
-		 
+		<ListBox x:Name="List" ItemsSource="{Binding Path =GameListViewModel.GameModelList}" Grid.Column="0"
+				  SelectedItem="{Binding Path= SelectedGameViewModel.SelectedGame}" Background="Transparent"
+				 ItemTemplate="{StaticResource GameListBoxItem}"/>
 
 
 
-		</ListBox>
+
+		<local:GameModelControl Grid.Column="1" Source="{Binding SelectedGameViewModel}"/>
+
+
 
 	</Grid>
 </Window>

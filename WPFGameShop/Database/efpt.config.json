@@ -8,11 +8,15 @@
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": null,
-   "ProjectRootNamespace": "WPFGameShop",
+  "ProjectRootNamespace": "WPFGameShop",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
    "Tables": [
+      {
+         "Name": "[dbo].[Discount]",
+         "ObjectType": 0
+      },
       {
          "Name": "[dbo].[EarlyAccesGame]",
          "ObjectType": 0

@@ -21,6 +21,8 @@ namespace WPFGameShop
     {
         DatabaseInteraction databaseInteraction = new();
         public GameListViewModel GameListViewModel { get; set; }
+
+        public SelectedGameViewModel SelectedGameViewModel { get; set; } = new();
         public GameListWindow()
         {
             GameListViewModel = new(databaseInteraction.GetGames());
