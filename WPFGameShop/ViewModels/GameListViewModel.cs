@@ -39,8 +39,12 @@ namespace WPFGameShop
 
             set
             {
-                selectedItem = value;
-                NotifyPropertyChanged();
+                if (selectedItem != value)
+                {
+                    selectedItem = value;
+                    NotifyPropertyChanged();
+                }
+               
             }
         }
 
@@ -68,6 +72,28 @@ namespace WPFGameShop
     {
 
 
+        ObservableCollection<GenreModel> allGenres;
+
+
+
+
+
+
+        public ObservableCollection<GenreModel> AllGenres
+        {
+            get => allGenres;
+            set
+            {
+                if (allGenres != value)
+                {
+                    allGenres = value;
+                    NotifyPropertyChanged();
+                }
+            
+
+            }
+        }
+
         GameModel selectedGame;
 
 
@@ -88,7 +114,7 @@ namespace WPFGameShop
             }
         }
 
-
+       
     
         public ICommand DropCommand =>   new DelegateCommand(
                      param => DropEvent(param as DragEventArgs),

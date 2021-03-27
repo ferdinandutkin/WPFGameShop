@@ -34,8 +34,8 @@
 			<wpfcontrollibrary:PriceControl Grid.Column="1" Price="{Binding Price}" Discount="{Binding Discount}"  Grid.Row="2"/>
 			<ListBox Grid.Column="1" Background="Transparent" Margin="0,112,0,0" Grid.RowSpan="2" ItemsSource="{Binding Genres}">
 				<ListBox.ItemTemplate>
-					<DataTemplate DataType="{x:Type local:PropString}">
-						<TextBlock  Text="{Binding Value}"/>
+					<DataTemplate DataType="{x:Type local:GenreModel}">
+						<TextBlock  Text="{Binding Name}"/>
 
 
 

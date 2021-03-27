@@ -13,33 +13,7 @@ namespace WPFGameShop
 
     }
 
-
-    public class Prop<T> : BindableBase
-    {
-        private T _value;
-
-        public Prop(T val) => _value = val;
-
-        public static implicit operator Prop<T>(T val) => new(val);
-        public T Value
-        {
-            get => _value;
-            set { 
-                if (!_value.Equals(value))
-                {
-                    NotifyPropertyChanged();
-                    _value = value;
-                }
-                    
-            }
-
-        }
-    }
-
-    public class PropString : Prop<string>
-    {
-        public PropString(string s) : base(s) { }
-    }
+    
     public class GameModel : BindableBase
     {
       
@@ -55,7 +29,7 @@ namespace WPFGameShop
 
 
 
-        private ObservableCollection<Prop<string>> genres;
+        private ObservableCollection<GenreModel> genres;
 
     
         public int Discount
@@ -71,7 +45,7 @@ namespace WPFGameShop
             }
         }
 
-        public ObservableCollection<Prop<string>> Genres
+        public ObservableCollection<GenreModel> Genres
         {
             get => genres;
             set

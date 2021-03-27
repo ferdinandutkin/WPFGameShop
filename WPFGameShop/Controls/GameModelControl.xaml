@@ -21,7 +21,7 @@
 			<local:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapСonverter"/>
 			<local:NegationConverter x:Key="NegationConverter"/>
 			<BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-			<Style TargetType="{x:Type TextBox}" x:Key="Toggleable">
+			<Style TargetType="{x:Type TextBox}" x:Key="ToggleableTextBox">
 				<Setter Property="IsReadOnly" Value="{Binding Path=IsEditable, Converter={StaticResource NegationConverter}}"/>
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding IsEditable}" Value="False">
@@ -30,6 +30,27 @@
                         Value="Transparent"/>
 
 						<Setter Property="BorderThickness" Value="0" />
+
+					</DataTrigger>
+
+				</Style.Triggers>
+
+
+
+			</Style>
+
+			<Style TargetType="{x:Type local:GenreControl}" x:Key="ToggleableGenreConrol">
+				<Setter Property="IsEditable" Value="{Binding Path=IsEditable}"/>
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsEditable}" Value="False">
+ 
+						<Setter Property="BorderThickness" Value="0" />
+
+					</DataTrigger>
+
+					<DataTrigger Binding="{Binding IsEditable}" Value="True">
+
+						<Setter Property="BorderThickness" Value="1" />
 
 					</DataTrigger>
 
@@ -72,13 +93,16 @@
 						</Trigger>
 					</Style.Triggers>
 				</Style>
+		
 			</ToggleButton.Style>
+			
+			
 		</ToggleButton>
 
 
 
 		
-		<TextBox Style="{StaticResource Toggleable}" Grid.Row="0" Grid.Column="0" FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap" Grid.ColumnSpan="3"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name}"/>
+		<TextBox Style="{StaticResource ToggleableTextBox}" Grid.Row="0" Grid.Column="0" FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap" Grid.ColumnSpan="3"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name}"/>
 
 		<!--"/>-->
 
@@ -104,13 +128,11 @@
 		
 
 		<wpfcontrollibrary:RatingControl IsEnabled="{Binding IsEditable}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Value="{Binding Source.SelectedGame.Rating}"/>
-		<DataGrid AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Source.SelectedGame.Genres}">
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Value, Mode=TwoWay}" IsReadOnly="False"/>
-			</DataGrid.Columns>
-		</DataGrid>
+		<local:GenreControl  Style="{StaticResource ToggleableGenreConrol}"  Grid.Row="1" Grid.Column="2" AllGenresSource ="{Binding Source.AllGenres}"  CurrentGenresSource="{Binding Source.SelectedGame.Genres}" />
 
-		<TextBox Style="{StaticResource Toggleable}" Grid.Row="2" Grid.Column="0" FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description}"/>
+
+
+		<TextBox Style="{StaticResource ToggleableTextBox}" Grid.Row="2" Grid.Column="0" FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description}"/>
 
 	</Grid>
 </UserControl>
