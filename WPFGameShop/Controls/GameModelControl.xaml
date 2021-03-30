@@ -71,14 +71,14 @@
 
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition  Width="*"/>
+			<ColumnDefinition  Width="2*"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition/>
-			<RowDefinition/>
+			<RowDefinition Height="0.5*"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="2*"/>
 
 		</Grid.RowDefinitions>
 		<ToggleButton  x:Name="toggleButton" IsChecked="{Binding  IsEditable, Mode=TwoWay}"  Panel.ZIndex="1"  Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -101,12 +101,11 @@
 
 
 
-		
-		<TextBox Style="{StaticResource ToggleableTextBox}" Grid.Row="0" Grid.Column="0" FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap" Grid.ColumnSpan="3"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name}"/>
-
-		<!--"/>-->
-
-		<Grid  Grid.Row="1" Grid.Column="0">
+		<!--name-->
+		<TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ToggleableTextBox}"  FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name}"/>
+ 
+		<!--cover-->
+		<Grid  Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom">
 			<Grid Panel.ZIndex="1">
 				<Grid Panel.ZIndex="1">
 					<Button Content="Drop or browse" HorizontalAlignment="Center" 
@@ -126,13 +125,41 @@
 
 		
 		
-
-		<wpfcontrollibrary:RatingControl IsEnabled="{Binding IsEditable}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Value="{Binding Source.SelectedGame.Rating}"/>
-		<local:GenreControl  Style="{StaticResource ToggleableGenreConrol}"  Grid.Row="1" Grid.Column="2" AllGenresSource ="{Binding Source.AllGenres}"  CurrentGenresSource="{Binding Source.SelectedGame.Genres}" />
+		
 
 
+		<!--rating-->
 
-		<TextBox Style="{StaticResource ToggleableTextBox}" Grid.Row="2" Grid.Column="0" FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description}"/>
+		<wpfcontrollibrary:RatingControl Grid.Row="1" Grid.Column="1" IsEnabled="{Binding IsEditable}" HorizontalAlignment="Left" VerticalAlignment="Top"  Value="{Binding Source.SelectedGame.Rating}"/>
+
+		<!--genres-->
+		<local:GenreControl FontSize="14"  Grid.Row="1" Grid.Column="2" Style="{StaticResource ToggleableGenreConrol}"   AllGenresSource ="{Binding Source.AllGenres}"  CurrentGenresSource="{Binding Source.SelectedGame.Genres}" />
+		
+		<!--price-->
+		
+		 
+
+		<StackPanel Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock FontSize="20" Text="Price:"/>
+				<TextBox Margin="5,0,0,0" FontSize="20"  Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Price}"/>
+			</StackPanel>
+			<StackPanel  Orientation="Horizontal">
+				<TextBlock FontSize="20" Text="Discount:"/>
+				<TextBox    Margin="5,0,0,0"  FontSize="20" Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Discount}"/>
+
+			</StackPanel>
+			<!--isEarlyAccess-->
+			<StackPanel Orientation="Horizontal" >
+				<TextBlock FontSize="20" Text="Is early access:"/>
+				<CheckBox Margin="5,7,0,0"   IsChecked="{Binding Source.SelectedGame.IsEarlyAccess}"/>
+
+			</StackPanel>
+		</StackPanel>
+		
+		<!--description-->
+
+		<TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ToggleableTextBox}"  FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description}"/>
 
 	</Grid>
 </UserControl>

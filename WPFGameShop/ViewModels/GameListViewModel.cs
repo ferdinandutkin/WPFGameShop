@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace WPFGameShop
@@ -15,10 +17,10 @@ namespace WPFGameShop
     {
         ObservableCollection<GameModel> gameModelList;
 
-        
 
-       
-    
+
+        public ICollectionView GameModelListView { get; set; }
+
 
         public ObservableCollection<GameModel> GameModelList
         {
@@ -26,6 +28,7 @@ namespace WPFGameShop
             set
             {
                 gameModelList = value;
+                GameModelListView = CollectionViewSource.GetDefaultView(GameModelList);
                 NotifyPropertyChanged();
 
             }
@@ -48,10 +51,10 @@ namespace WPFGameShop
             }
         }
 
-        public GameListViewModel(IEnumerable<GameModel> models) => gameModelList = new ObservableCollection<GameModel>(models);
+        public GameListViewModel(IEnumerable<GameModel> models) => GameModelList = new ObservableCollection<GameModel>(models);
 
 
-        public GameListViewModel(ObservableCollection<GameModel> models) => gameModelList = new ObservableCollection<GameModel>(models);
+        public GameListViewModel(ObservableCollection<GameModel> models) => GameModelList = new ObservableCollection<GameModel>(models);
         public ICommand SeeMoreCommand => new DelegateCommand(
                      param => SeeMore(),
                      param => (SelectedItem is not null)

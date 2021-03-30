@@ -4,57 +4,71 @@
 
 	<DataTemplate DataType="{x:Type local:GameModel}" x:Key="GameListBoxItem">
 		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition  Height="*"/>
-				<RowDefinition  Height="*"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition MinWidth="300"/>
-				<ColumnDefinition />
-
-			</Grid.ColumnDefinitions>
 			<Grid.Resources>
+				<BooleanToVisibilityConverter x:Key="BoolToVisConverter"/>
 				<local:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapСonverter"/>
 			</Grid.Resources>
 
 
+			<TextBlock Visibility="{Binding IsEarlyAccess, Converter={StaticResource BoolToVisConverter}}"
+					   FontSize="20"  RenderTransformOrigin="0.5,0.5" 
+					    Panel.ZIndex="1"
+					   FontStyle="Italic"
+					   HorizontalAlignment="Left" VerticalAlignment="Bottom"  Text="Early access" Grid.Row="1" Grid.Column="0"/>
+			<Grid Panel.ZIndex="0">
+				<Grid.RowDefinitions>
+					<RowDefinition  Height="*"/>
+					<RowDefinition  Height="*"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition MinWidth="300"/>
+					<ColumnDefinition />
+					<ColumnDefinition />
+
+				</Grid.ColumnDefinitions>
+				
 
 
-			<Image Grid.Column="0" Grid.Row="0"  Grid.RowSpan="3" Height="200" Width="80" HorizontalAlignment="Left"
-							   Source="{Binding Path=Cover, Converter={StaticResource ByteArrayToBitmapСonverter}}">
 
-
-			</Image>
-			<TextBlock Grid.Row="0" Grid.Column="0" FontSize="40" Text="{Binding Name}"/>
-
-
-			<wpfcontrollibrary:RatingControl Grid.Row="0" Grid.Column="1"  Height="40" Value="{Binding Rating}" IsEnabled="False" />
-			<wpfcontrollibrary:PriceControl Grid.Column="1" Price="{Binding Price}" Discount="{Binding Discount}"  Grid.Row="2"/>
-			<ListBox Grid.Column="1" Background="Transparent" Margin="0,112,0,0" Grid.RowSpan="2" ItemsSource="{Binding Genres}">
-				<ListBox.ItemTemplate>
-					<DataTemplate DataType="{x:Type local:GenreModel}">
-						<TextBlock  Text="{Binding Name}"/>
-
-
-
-					</DataTemplate>
-			</ListBox.ItemTemplate>
-				<ListBox.ItemsPanel>
-					<ItemsPanelTemplate >
-						<StackPanel Orientation="Horizontal" Background="Transparent"></StackPanel>
-					</ItemsPanelTemplate>
-
-				</ListBox.ItemsPanel>
- 
+				<Image Margin="0,15,0,0" Grid.Column="0" Grid.Row="0"  Grid.RowSpan="3"  Height="200" Width="80" HorizontalAlignment="Left"
+							   Source="{Binding Cover, Converter={StaticResource ByteArrayToBitmapСonverter}}"/>
 
 
 
 
+				<TextBlock Grid.Row="0" Grid.Column="0" FontSize="40" Text="{Binding Name}"/>
 
-			</ListBox>
+
+				<wpfcontrollibrary:RatingControl Grid.Row="0" Grid.Column="1"  Height="40" Value="{Binding Rating}" IsEnabled="False" />
+				<wpfcontrollibrary:PriceControl Grid.Column="1" Price="{Binding Price}" Discount="{Binding Discount}"  Grid.Row="2"/>
+				<ListView Grid.Column="1" Background="Transparent" Margin="0,112,0,0" Grid.RowSpan="2" ItemsSource="{Binding Genres}">
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type local:GenreModel}">
+							<TextBlock  Text="{Binding Name}"/>
+
+
+
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate >
+							<StackPanel Orientation="Horizontal" Background="Transparent"></StackPanel>
+						</ItemsPanelTemplate>
+
+					</ListBox.ItemsPanel>
+
+
+
+
+
+
+				</ListView>
+			</Grid>
+
 		</Grid>
+	
 	</DataTemplate>
 
 </ResourceDictionary>

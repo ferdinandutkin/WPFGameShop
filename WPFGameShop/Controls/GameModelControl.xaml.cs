@@ -51,7 +51,7 @@ namespace WPFGameShop
             
             InitializeComponent();
           
-            this.SourceUpdated += GameModelControl_SourceUpdated;
+           
             
            
           
@@ -60,17 +60,7 @@ namespace WPFGameShop
         }
       
 
-        private void GameModelControl_SourceUpdated(object sender, DataTransferEventArgs e)
-        {
-            if (Source is not null)
-            {
-                MessageBox.Show("not null");
-                Source.PropertyChanged += (source, name) =>
-                {
-                    MessageBox.Show(name.PropertyName);
-                };
-            }
-        }
+       
 
       
     }

@@ -11,18 +11,130 @@
 	</Window.DataContext>
     <Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="1*"/>
-			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition/>
+
+			<ColumnDefinition x:Name="ColumnSplitter" Width="Auto">
+				<ColumnDefinition.Style>
+					<Style TargetType="{x:Type ColumnDefinition}">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding SelectedGameViewModel.SelectedGame}" Value="{x:Null}">
+								<DataTrigger.Setters>
+									<Setter Property="ColumnDefinition.Width" Value="0"/>
+								</DataTrigger.Setters>
+							</DataTrigger>
+						</Style.Triggers>
+
+					</Style>
+				</ColumnDefinition.Style>
+			</ColumnDefinition>
+			<ColumnDefinition x:Name="ColumnSelectedGame">
+				<ColumnDefinition.Style>
+					<Style TargetType="{x:Type ColumnDefinition}">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding SelectedGameViewModel.SelectedGame}" Value="{x:Null}">
+								<DataTrigger.Setters>
+									<Setter Property="ColumnDefinition.Width" Value="0"/>
+								</DataTrigger.Setters>
+							</DataTrigger>
+						</Style.Triggers>
+
+					</Style>
+				</ColumnDefinition.Style>
+
+			</ColumnDefinition>
 		</Grid.ColumnDefinitions>
 
-		<ListBox x:Name="List" ItemsSource="{Binding Path =GameListViewModel.GameModelList}" Grid.Column="0"
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="9*"/>
+ 
+		 
+			
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" >
+		 
+				<ToolBar Height="Auto">
+					<wpfcontrollibrary:SearchControl  />
+
+				 
+				</ToolBar>
+					
+			 
+		</StackPanel>
+
+
+
+		<ListView x:Name="List" ItemsSource="{Binding Path =GameListViewModel.GameModelListView}" Grid.Column="0"  Grid.Row="1"
 				  SelectedItem="{Binding Path= SelectedGameViewModel.SelectedGame}" Background="Transparent"
 				 ItemTemplate="{StaticResource GameListBoxItem}"/>
 
+		<GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="5" VerticalAlignment="Stretch"/>
 
 
 
-		<local:GameModelControl Grid.Column="1" Source="{Binding SelectedGameViewModel}"/>
+
+
+		<local:GameModelControl Grid.Column="2"  Grid.Row="1" Source="{Binding SelectedGameViewModel}"/>
+
+
+		<!--<Grid Grid.Row="2">
+			<Grid.Resources>
+				<Style TargetType="{x:Type StackPanel}">
+					<Setter Property="Margin" Value="0 0 10 0"/>
+				</Style>
+
+				<Style x:Key="Title" TargetType="{x:Type TextBlock}">
+					<Setter Property="FontSize" Value="18"/>
+					<Setter Property="Margin" Value="0 5"/>
+				</Style>
+			</Grid.Resources>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0">
+				<TextBlock Style="{StaticResource Title}"><Bold>Filter</Bold></TextBlock>
+				
+				<TextBox Margin="0 5" Text="{Binding filter, UpdateSourceTrigger=PropertyChanged}">
+					<TextBox.InputBindings>
+						<KeyBinding Command="{Binding FilterCommand}" Key="Return" />
+					</TextBox.InputBindings>
+				</TextBox>
+				<ComboBox>
+
+				</ComboBox>
+				<Button Content="Filter" Command="{Binding FilterCommand}"/>
+			</StackPanel>
+			<StackPanel Grid.Column="1">
+				<TextBlock Style="{StaticResource Title}"><Bold>Sorting</Bold></TextBlock>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<RadioButton Command="{Binding SortCommand}" CommandParameter="name" Content="NAME" Grid.Column="0"/>
+					<RadioButton Command="{Binding SortCommand}" CommandParameter="count"  Content="COUNT" Grid.Column="1"/>
+					<RadioButton IsChecked="True" Command="{Binding SortCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+				</Grid>
+			</StackPanel>
+			<StackPanel Grid.Column="2">
+				<TextBlock Style="{StaticResource Title}"><Bold>Grouping</Bold></TextBlock>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					<RadioButton Command="{Binding GroupCommand}" CommandParameter="count" Content="COUNT" Grid.Column="0"/>
+					<RadioButton Command="{Binding GroupCommand}" CommandParameter="habitat"  Content="HABITAT" Grid.Column="1"/>
+					<RadioButton IsChecked="True" Command="{Binding GroupCommand}" CommandParameter="none"  Content="NONE" Grid.Column="2"/>
+				</Grid>
+			</StackPanel>
+
+		</Grid>-->
 
 
 

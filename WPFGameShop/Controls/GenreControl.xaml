@@ -46,10 +46,10 @@
 
 		</Grid.Triggers>
 
-		<StackPanel Visibility="{Binding IsEditable, Converter={StaticResource BoolToVisConverter}}" Orientation="Horizontal" Grid.Row="0">
-			<Button x:Name="AddButton" Style="{StaticResource SquareButton}" VerticalAlignment="Center" HorizontalAlignment="Left" Content="+" Click="AddButton_Click"/>
+		<StackPanel VerticalAlignment="Bottom" Visibility="{Binding IsEditable, Converter={StaticResource BoolToVisConverter}}" Orientation="Horizontal" Grid.Row="0">
+			<Button x:Name="AddButton" Style="{StaticResource SquareButton}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Content="+" Click="AddButton_Click"/>
 
-			<Button x:Name="DeleteButton" Style="{StaticResource SquareButton}" VerticalAlignment="Center" HorizontalAlignment="Left" Content="-" Click="DeleteButton_Click"/>
+			<Button x:Name="DeleteButton" Style="{StaticResource SquareButton}"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" Content="-" Click="DeleteButton_Click"/>
 
 		</StackPanel>
 
@@ -75,7 +75,7 @@
 				
 
 				<StackPanel Grid.Row="0"  Orientation="Horizontal">
-					<Button x:Name="CloseButton" Style="{StaticResource SquareButton}" Content="x">
+					<Button x:Name="CloseButton" Style="{StaticResource SquareButton}"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="x">
 						<Button.Triggers>
 							<EventTrigger RoutedEvent="Button.Click">
 								<BeginStoryboard>
@@ -92,7 +92,14 @@
 					</Button>
 				</StackPanel>
 
-				<ListBox Grid.Row="1" PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown" x:Name="TotalListBox"  ItemsSource="{Binding AllGenresSource}"/>
+				<ListBox Grid.Row="1"   x:Name="TotalListBox"  ItemsSource="{Binding AllGenresSource}">
+					<ListBox.ItemContainerStyle>
+						<Style  TargetType="{x:Type ListBoxItem}">
+							<EventSetter Event="PreviewMouseMove" Handler="ListBox_PreviewMouseLeftButtonDown"/>
+						</Style>
+					</ListBox.ItemContainerStyle>
+					
+				</ListBox>
 
 
 			</Grid>

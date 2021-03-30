@@ -84,45 +84,17 @@ namespace WPFGameShop
             AddToCurrent(data);
       
         }
-        private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseEventArgs e)
         {
-            
-            object data = GetDataFromListBox(TotalListBox, e.GetPosition(TotalListBox));
 
-            if (data is not null)
+            if (sender is ListBoxItem && e.LeftButton == MouseButtonState.Pressed)
             {
-                DragDrop.DoDragDrop(TotalListBox, data, DragDropEffects.Move);
+                ListBoxItem draggedItem = sender as ListBoxItem;
+                DragDrop.DoDragDrop(draggedItem, draggedItem.DataContext, DragDropEffects.Move);
+                draggedItem.IsSelected = true;
             }
         }
-        private static object GetDataFromListBox(ListBox source, Point point)
-        {
-            if (source.InputHitTest(point) is UIElement element)
-            {
-                object data = DependencyProperty.UnsetValue;
-                while (data == DependencyProperty.UnsetValue)
-                {
-                    data = source.ItemContainerGenerator.ItemFromContainer(element);
-
-                    if (data == DependencyProperty.UnsetValue)
-                    {
-                        element = VisualTreeHelper.GetParent(element) as UIElement;
-                    }
-
-                    if (element == source)
-                    {
-                        return null;
-                    }
-                }
-
-                if (data != DependencyProperty.UnsetValue)
-                {
-                    return data;
-                }
-            }
-
-            return null;
-        }
-
+      
 
         void AddToCurrent(object element)
         {
