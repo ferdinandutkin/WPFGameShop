@@ -2,13 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPFGameShop"
-			 xmlns:mycontrols="clr-namespace:WpfControlLibrary;assembly=UserControls"
-             StartupUri="MainWindow.xaml">
+			 xmlns:mycontrols="clr-namespace:WPFGameShop;assembly=UserControls"
+             StartupUri="Windows/GameListWindow.xaml">
     <Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Views/GameListBoxItemView.xaml"/>
 				<ResourceDictionary Source="Views/GameSelectedItemView.xaml"/>
+				<ResourceDictionary Source="Views/GameListView.xaml"/>
+		
 				
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>

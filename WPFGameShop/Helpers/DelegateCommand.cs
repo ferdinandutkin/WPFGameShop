@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace WPFGameShop
 {
     public class DelegateCommand : ICommand
     {
-   
+
         readonly Action<object> execute;
         readonly Predicate<object> canExecute;
 
-    
 
- 
+
+
         public DelegateCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
 
@@ -23,7 +19,7 @@ namespace WPFGameShop
             this.canExecute = canExecute;
         }
 
-      
+
 
 
         public bool CanExecute(object parameters)
@@ -39,6 +35,6 @@ namespace WPFGameShop
         public void Execute(object parameters) => execute(parameters);
 
 
-      
+
     }
 }

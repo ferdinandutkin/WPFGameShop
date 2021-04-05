@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WPFGameShop
 {
 
 
-     
+
     /// <summary>
     /// Логика взаимодействия для UserControl1.xaml
     /// </summary>
@@ -34,7 +24,7 @@ namespace WPFGameShop
         //{
 
         //    var control = sender as GenreControl;
-           
+
         //   if ((bool)e.NewValue)
         //    {
         //        control.popup.IsOpen = false;
@@ -55,15 +45,15 @@ namespace WPFGameShop
        typeof(ObservableCollection<GenreModel>), typeof(GenreControl)
        );
 
-       
+
         public ObservableCollection<GenreModel> CurrentGenresSource
         {
             get => GetValue(CurrentGenresSourceProperty) as ObservableCollection<GenreModel>;
             set => SetValue(CurrentGenresSourceProperty, value);
         }
 
-         
- 
+
+
         public static readonly DependencyProperty AllGenresSourceProperty = DependencyProperty.Register(nameof(AllGenresSource),
     typeof(ObservableCollection<GenreModel>), typeof(GenreControl)
     );
@@ -75,14 +65,14 @@ namespace WPFGameShop
             set => SetValue(AllGenresSourceProperty, value);
         }
 
-       
+
 
         private void ListBox_Drop(object sender, DragEventArgs e)
         {
-           
+
             object data = e.Data.GetData(typeof(GenreModel));
             AddToCurrent(data);
-      
+
         }
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseEventArgs e)
         {
@@ -94,14 +84,18 @@ namespace WPFGameShop
                 draggedItem.IsSelected = true;
             }
         }
-      
+
 
         void AddToCurrent(object element)
         {
-            if (!(CurrentListBox.ItemsSource as IList).Contains(element))
+            if (CurrentListBox.ItemsSource is IList list)
             {
-                (CurrentListBox.ItemsSource as IList).Add(element);
+                if (!list.Contains(element))
+                {
+                    list.Add(element);
+                }
             }
+            
         }
 
         private void PopupOpened(object sender, EventArgs e)
@@ -117,23 +111,23 @@ namespace WPFGameShop
             {
                 popup.IsOpen = false;
             }
-        
+
         }
-      
+
         public GenreControl()
         {
-           
+
             InitializeComponent();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-             if (CurrentListBox.SelectedItem is not null)
+            if (CurrentListBox.SelectedItem is not null)
             {
                 (CurrentListBox.ItemsSource as IList).Remove(CurrentListBox.SelectedItem);
             }
-                 
- 
+
+
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -144,7 +138,7 @@ namespace WPFGameShop
             }
         }
 
-       
+
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
 

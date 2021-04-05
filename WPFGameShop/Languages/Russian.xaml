@@ -1,0 +1,18 @@
+﻿<wpfcontrollibrary:LangResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+										   xmlns:wpfcontrollibrary="clr-namespace:WpfControlLibrary;assembly=UserControls"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:v="clr-namespace:System;assembly=System.Runtime">
+
+
+	<!--боковая панель-->
+	<v:String x:Key="settings">Настройки</v:String>
+	<v:String x:Key="games">Игры</v:String>
+
+
+	<!--тулбар-->
+	<v:String x:Key="apply">Найти</v:String>
+	<v:String x:Key="new">Новый</v:String>
+	<v:String x:Key="delete">Удалить</v:String>
+	<v:String x:Key="saveChanges">Сохранить изменения</v:String>
+	<v:String x:Key="search">Поиск</v:String>
+
+</wpfcontrollibrary:LangResourceDictionary>

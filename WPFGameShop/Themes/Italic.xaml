@@ -1,0 +1,10 @@
+﻿<wpfcontrollibrary:ThemeResourceDictionary  xmlns:wpfcontrollibrary="clr-namespace:WpfControlLibrary;assembly=UserControls" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+	<Style TargetType="{x:Type TextBlock}">
+		<Setter Property="FontStyle"
+                Value="Italic" />
+		</Style>
+
+</wpfcontrollibrary:ThemeResourceDictionary>

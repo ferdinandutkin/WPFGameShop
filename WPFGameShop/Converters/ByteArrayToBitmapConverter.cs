@@ -1,38 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
 namespace WPFGameShop
 {
     class ByteArrayToBitmapConverter : IValueConverter
-    { 
+    {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is null)
+             
+            if (value is not byte[] imageData || imageData.Length == 0) return null;
+            var image = new BitmapImage();
+            using (var mem = new MemoryStream(imageData))
             {
-
-                return null;
+                mem.Position = 0;
+                image.BeginInit();
+                //image.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+            
+                image.StreamSource = mem;
+                image.EndInit();
             }
-
-            var ms = new MemoryStream(value as byte[]);
-
-            ms.Seek(0, SeekOrigin.Begin);
-
-            var newBitmapImage = new BitmapImage();
-
-            newBitmapImage.BeginInit();
-
-            newBitmapImage.StreamSource = ms;
-
-            newBitmapImage.EndInit();
-
-            return newBitmapImage;
+            image.Freeze();
+            return image;
         }
 
 

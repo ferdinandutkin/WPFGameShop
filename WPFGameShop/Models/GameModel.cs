@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace WPFGameShop
 {
@@ -13,10 +8,10 @@ namespace WPFGameShop
 
     }
 
-    
+
     public class GameModel : BindableBase
     {
-      
+
 
         private byte[] cover;
         private int id;
@@ -29,9 +24,9 @@ namespace WPFGameShop
 
 
 
-        private ObservableCollection<GenreModel> genres;
+        private ObservableCollection<GenreModel> genres = new();
 
-    
+
         public int Discount
         {
             get => discount;
@@ -92,8 +87,11 @@ namespace WPFGameShop
                 if (value != cover)
                 {
                     NotifyPropertyChanged();
+                    NotifyPropertyChanged();
+                     
                     cover = value;
-                  
+                    NotifyPropertyChanged();
+
                 }
 
             }
@@ -151,7 +149,7 @@ namespace WPFGameShop
             }
         }
 
-       
+
     }
 
 

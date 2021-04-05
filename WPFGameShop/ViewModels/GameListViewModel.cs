@@ -1,23 +1,109 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace WPFGameShop
 {
+
+
+
+
     public class GameListViewModel : BindableBase
     {
         ObservableCollection<GameModel> gameModelList;
 
+        SelectedGameViewModel selectedGameViewModel;
+        readonly IGameShopRepository IGameShopRepository;
 
+        public SelectedGameViewModel SelectedGameViewModel
+        {
+            get => selectedGameViewModel;
+            set
+            {
+                if (value != selectedGameViewModel)
+                {
+                    selectedGameViewModel = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+
+        public ICommand SearchCommand => new DelegateCommand(
+                   param => Search(param.ToString())
+               );
+
+
+       
+        public ICommand DeleteCommand => new DelegateCommand(
+            param => Delete(),
+            param => SelectedGameViewModel.SelectedGame is not null
+        );
+
+
+        public ICommand NewCommand => new DelegateCommand(
+      param => New()
+  );
+
+        private void New()
+        {
+            gameModelList.Add(new GameModel());
+        }
+
+        public ICommand SaveChangesCommand => new DelegateCommand(
+                  param => SaveChanges()
+              );
+
+        void SaveChanges() => IGameShopRepository.SaveChanges(gameModelList);
+
+
+      
+
+        public GameListViewModel(IGameShopRepository IGameShopRepository)
+        {
+            this.IGameShopRepository = IGameShopRepository;
+            this.selectedGameViewModel = new();
+
+            this.selectedGameViewModel.AllGenres = new ObservableCollection<GenreModel>(IGameShopRepository.GetGenres());
+            this.GameModelList = new ObservableCollection<GameModel>(IGameShopRepository.GetGames());
+ 
+
+        }
+
+        void Search(string search)
+        {
+         
+            GameModelListView.Filter = item =>
+            {
+                string searchLower = search.ToLower();
+                if (searchLower.Trim() == string.Empty)
+                {
+                    return true;
+                }
+                GameModel gameModel = item as GameModel;
+                return gameModel.Name.ToLower().Contains(searchLower) ||
+                gameModel.Price.ToString().ToLower().Contains(searchLower) ||
+                gameModel.Genres.Any(genre => genre.Name.ToLower().Contains(searchLower)) ||
+                gameModel.Rating.ToString().ToLower().Contains(searchLower);
+
+
+
+            };
+        }
+
+        void Delete()
+        {
+            IGameShopRepository.RemoveGame(selectedGameViewModel.SelectedGame);
+            GameModelList.Remove(selectedGameViewModel.SelectedGame);
+
+        }
 
         public ICollectionView GameModelListView { get; set; }
 
@@ -35,38 +121,8 @@ namespace WPFGameShop
         }
 
 
-        GameModel selectedItem;
-        public GameModel SelectedItem
-        {
-            get => selectedItem;
-
-            set
-            {
-                if (selectedItem != value)
-                {
-                    selectedItem = value;
-                    NotifyPropertyChanged();
-                }
-               
-            }
-        }
-
-        public GameListViewModel(IEnumerable<GameModel> models) => GameModelList = new ObservableCollection<GameModel>(models);
 
 
-        public GameListViewModel(ObservableCollection<GameModel> models) => GameModelList = new ObservableCollection<GameModel>(models);
-        public ICommand SeeMoreCommand => new DelegateCommand(
-                     param => SeeMore(),
-                     param => (SelectedItem is not null)
-                 );
-
-
-
-        void SeeMore()
-        {
-            MessageBox.Show("More");
-
-        }
 
     }
 
@@ -92,7 +148,7 @@ namespace WPFGameShop
                     allGenres = value;
                     NotifyPropertyChanged();
                 }
-            
+
 
             }
         }
@@ -109,26 +165,26 @@ namespace WPFGameShop
             {
                 if (selectedGame != value)
                 {
-                    
+
                     selectedGame = value;
                     NotifyPropertyChanged();
                 }
-               
+
             }
         }
 
-       
-    
-        public ICommand DropCommand =>   new DelegateCommand(
+
+
+        public ICommand DropCommand => new DelegateCommand(
                      param => DropEvent(param as DragEventArgs),
                      param => (SelectedGame is not null)
                  );
 
-        public ICommand DragEnterCommand =>   new DelegateCommand(
+        public ICommand DragEnterCommand => new DelegateCommand(
                      param => DragEnterEvent(),
                      param => (SelectedGame is not null)
                  );
-        public ICommand DragLeaveCommand =>  new DelegateCommand(
+        public ICommand DragLeaveCommand => new DelegateCommand(
                      param => DragLeaveEvent(),
                      param => (SelectedGame is not null)
                  );
@@ -157,7 +213,7 @@ namespace WPFGameShop
 
         private void BrowseImageEvent()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            OpenFileDialog openFileDialog = new()
             {
                 Filter = "Image Files|*.jpg;*.png;*.bmp;*.tiff;"
             };
@@ -176,7 +232,7 @@ namespace WPFGameShop
         {
             try
             {
-                
+
                 Entered = false;
 
                 if (obj.Data.GetDataPresent(DataFormats.FileDrop))
@@ -185,8 +241,8 @@ namespace WPFGameShop
                     SelectedGame.Cover = File.ReadAllBytes(files.Last());
                     //NotifyPropertyChanged(nameof(SelectedGame));
                 }
-              
-                
+
+
             }
             catch (Exception ex)
             {
@@ -194,7 +250,7 @@ namespace WPFGameShop
             }
         }
 
-      
+
 
     }
 }
