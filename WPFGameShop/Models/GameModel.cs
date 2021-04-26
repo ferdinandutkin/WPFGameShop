@@ -9,7 +9,7 @@ namespace WPFGameShop
     }
 
 
-    public class GameModel : BindableBase
+    public class GameModel : TrackableBindableBase
     {
 
 
@@ -23,130 +23,66 @@ namespace WPFGameShop
         private bool isEarlyAccess;
 
 
-
+        public GameModel()
+        {
+           
+        }
         private ObservableCollection<GenreModel> genres = new();
 
 
         public int Discount
         {
             get => discount;
-            set
-            {
-                if (value != discount)
-                {
-                    discount = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref discount, value);
         }
 
         public ObservableCollection<GenreModel> Genres
         {
             get => genres;
-            set
-            {
-                if (value != genres)
-                {
-                    genres = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref genres, value);
         }
 
         public bool IsEarlyAccess
         {
             get => isEarlyAccess;
-            set
-            {
-                if (value != isEarlyAccess)
-                {
-                    isEarlyAccess = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref isEarlyAccess, value);
         }
 
         public int Id
         {
             get => id;
-            set
-            {
-                if (value != id)
-                {
-                    id = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref id, value);
         }
 
         public byte[] Cover
         {
             get => cover;
-            set
-            {
-                if (value != cover)
-                {
-                    NotifyPropertyChanged();
-                    NotifyPropertyChanged();
-                     
-                    cover = value;
-                    NotifyPropertyChanged();
-
-                }
-
-            }
+            set => Set(ref cover, value);
         }
+
         public string Name
         {
             get => name;
-            set
-            {
-                if (value != name)
-                {
-                    name = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref name, value);
         }
 
 
         public string Description
         {
             get => description;
-            set
-            {
-                if (value != description)
-                {
-                    description = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref description, value);
         }
 
         public int Rating
         {
             get => rating;
-            set
-            {
-                if (value != rating)
-                {
-                    rating = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref rating, value);
         }
 
         public decimal Price
         {
             get => price;
-            set
-            {
-                if (value != price)
-                {
-                    price = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref price, value);
         }
 
 

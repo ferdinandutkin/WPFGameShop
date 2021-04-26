@@ -62,7 +62,20 @@
 				   SelectedItem = "{Binding SelectedGameViewModel.SelectedGame}" Background = "Transparent"
 				   ItemTemplate = "{StaticResource GameListBoxItem}"/>
 
-			<GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="5" VerticalAlignment="Stretch"/>
+			<GridSplitter Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Width="5" VerticalAlignment="Stretch">
+				<GridSplitter.Style>
+					<Style TargetType="{x:Type GridSplitter}">
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding  SelectedGameViewModel.SelectedGame}" Value="{x:Null}">
+								<DataTrigger.Setters>
+									<Setter Property="IsEnabled" Value="False"/>
+								</DataTrigger.Setters>
+							</DataTrigger>
+						</Style.Triggers>
+
+					</Style>
+				</GridSplitter.Style>
+			</GridSplitter>
 
 
 

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace WPFGameShop
@@ -7,12 +9,21 @@ namespace WPFGameShop
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+            => PropertyChanged?.Invoke(this, new(propertyName));
+
+
+        protected virtual void Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new(propertyName));
-            // MessageBox.Show(propertyName);
+            if (!EqualityComparer<T>.Default.Equals(field, value))
+            {
+                field = value;
+                NotifyPropertyChanged(propertyName);
+            }
         }
 
-
     }
+
+
+  
 }

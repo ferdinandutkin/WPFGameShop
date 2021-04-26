@@ -19,19 +19,39 @@ namespace WPFGameShop
         public Theme SelectedTheme
         {
             get => selectedTheme;
-            set
-            {
-                if (selectedTheme != value)
-                {
-                    selectedTheme = value;
-                    NotifyPropertyChanged();
-                }
-              
-            }
+            set => Set(ref selectedTheme, value);
         }
 
        
 
        
+    }
+
+
+
+
+
+    public sealed class LanguageViewModel : BindableBase
+    {
+        private Language selectedLanguage;
+
+        public LanguageViewModel()
+        {
+
+
+        }
+
+        public ObservableCollection<Language> Language { get; set; } = new();
+
+        public Language SelectedLanguage
+        {
+            get => selectedLanguage;
+            set => Set(ref selectedLanguage, value);
+           
+        }
+
+
+
+
     }
 }

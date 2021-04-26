@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using WpfControlLibrary;
 
@@ -12,25 +14,27 @@ namespace WPFGameShop
          
         public ThemeViewModel ThemeViewModel { get; set; } = new();
 
-        public ThemeViewModel LanguageViewModel { get; set; } = new();
-        public GameListViewModel GameListViewModel { get; set; } = new(new IShopRepository());
+        public LanguageViewModel LanguageViewModel { get; set; } = new();
+        public GameListViewModel GameListViewModel { get; set; } = new(new GameShopContextOperations());
 
+ 
     
 
 
         public GameListWindow()
         {
 
-
-
-            LanguageViewModel.Themes.Add(
-                  new Theme("English", new Uri("/Languages/English.xaml", UriKind.Relative))
-
-
+            
+          
+            LanguageViewModel.Language.Add(
+                new Language(new CultureInfo("en-US"),
+                new Uri("/Languages/English.xaml", UriKind.Relative))
                   );
 
-            LanguageViewModel.Themes.Add(
-                 new Theme("Русский", new Uri("/Languages/Russian.xaml", UriKind.Relative))
+            LanguageViewModel.Language.Add(
+
+                new Language(new CultureInfo("ru-RU"),
+                new Uri("/Languages/Russian.xaml", UriKind.Relative))
 
 
                  );
@@ -46,8 +50,7 @@ namespace WPFGameShop
 
                    );
 
-
-
+         
 
             ThemeViewModel.Themes.Add(
                 new Theme("Bold", new Uri("/Themes/Bold.xaml", UriKind.Relative))

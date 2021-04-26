@@ -25,14 +25,7 @@ namespace WPFGameShop
         public SelectedGameViewModel SelectedGameViewModel
         {
             get => selectedGameViewModel;
-            set
-            {
-                if (value != selectedGameViewModel)
-                {
-                    selectedGameViewModel = value;
-                    NotifyPropertyChanged();
-                }
-            }
+            set => Set(ref selectedGameViewModel, value);
         }
 
 
@@ -82,8 +75,8 @@ namespace WPFGameShop
          
             GameModelListView.Filter = item =>
             {
-                string searchLower = search.ToLower();
-                if (searchLower.Trim() == string.Empty)
+                string searchLower = search.ToLower().Trim();
+                if (searchLower == string.Empty)
                 {
                     return true;
                 }

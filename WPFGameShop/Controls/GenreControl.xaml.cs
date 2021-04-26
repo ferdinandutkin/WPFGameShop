@@ -20,21 +20,7 @@ namespace WPFGameShop
       typeof(bool), typeof(GenreControl)
       );
 
-        //private void propertyChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        //{
-
-        //    var control = sender as GenreControl;
-
-        //   if ((bool)e.NewValue)
-        //    {
-        //        control.popup.IsOpen = false;
-        //    }
-        //   else
-        //    {
-        //        control.popup.IsOpen = true;
-        //    }
-
-        //}
+      
 
         public bool IsEditable
         {
@@ -139,9 +125,6 @@ namespace WPFGameShop
         }
 
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+      
     }
 }

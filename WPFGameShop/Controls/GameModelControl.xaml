@@ -10,12 +10,17 @@
 			 mc:Ignorable="d" 	
 			 AllowDrop="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}"
              d:DesignHeight="450" d:DesignWidth="800">
+	<UserControl.InputBindings>
+		<KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding ElementName=root, Path=Source.SelectedGame.UndoCommand}"/>
+		<KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding ElementName=root, Path=Source.SelectedGame.RedoCommand}"/>
+	</UserControl.InputBindings>
+	
 
 
  
 	 
 
-	<Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+	<Grid  DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
 
 		<Grid.Resources>
 			<local:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapСonverter"/>
@@ -102,7 +107,7 @@
 
 
 		<!--name-->
-		<TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ToggleableTextBox}"  FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name}"/>
+		<TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource ToggleableTextBox}"  FontSize="40" HorizontalAlignment="Left"  TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
  
 		<!--cover-->
 		<Grid  Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom">
@@ -119,8 +124,8 @@
 				
 			</Grid>
 			
-			<Image  Panel.ZIndex="0" Grid.Column="0" Grid.Row="1"
-					     Stretch="Uniform"  Source="{Binding Source.SelectedGame.Cover, Converter={StaticResource ByteArrayToBitmapСonverter}, UpdateSourceTrigger=PropertyChanged}"/>
+			<Image  Panel.ZIndex="0" Grid.Column="0" Grid.Row="1" x:Name="cover"
+					     Stretch="Uniform"  Source="{Binding Source.SelectedGame.Cover, Converter={StaticResource ByteArrayToBitmapСonverter}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 		</Grid>
 
 		
@@ -142,11 +147,11 @@
 		<StackPanel Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Orientation="Vertical">
 			<StackPanel Orientation="Horizontal">
 				<TextBlock FontSize="20" Text="Price:"/>
-				<TextBox Margin="5,0,0,0" FontSize="20"  Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Price}"/>
+				<TextBox Margin="5,0,0,0" FontSize="20"  x:Name="price" Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
 			</StackPanel>
 			<StackPanel  Orientation="Horizontal">
 				<TextBlock FontSize="20" Text="Discount:"/>
-				<TextBox    Margin="5,0,0,0"  FontSize="20" Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Discount}"/>
+				<TextBox    Margin="5,0,0,0"  FontSize="20" Style="{StaticResource ToggleableTextBox}"  Text="{Binding Source.SelectedGame.Discount, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
 
 			</StackPanel>
 			<!--isEarlyAccess-->
@@ -159,7 +164,7 @@
 		
 		<!--description-->
 
-		<TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ToggleableTextBox}"  FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description}"/>
+		<TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource ToggleableTextBox}"  FontSize="20" HorizontalAlignment="Left"  Grid.ColumnSpan="3" TextWrapping="Wrap"  VerticalAlignment="Center" Text="{Binding Source.SelectedGame.Description, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
 
 	</Grid>
 </UserControl>

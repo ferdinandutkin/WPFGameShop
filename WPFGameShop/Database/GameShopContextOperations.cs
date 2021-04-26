@@ -23,14 +23,25 @@ namespace WPFGameShop
     }
 
 
+    class DummyRepo : IGameShopRepository
+    {
+        public IEnumerable<GameModel> GetGames() => Enumerable.Empty<GameModel>();
+        
+        public IEnumerable<GenreModel> GetGenres() => Enumerable.Empty<GenreModel>();
 
 
+        public void RemoveGame(GameModel model) { }
 
-    public class IShopRepository : IDisposable, IGameShopRepository
+        public void SaveChanges(IEnumerable<GameModel> gameModels) { }
+        
+    }
+
+
+    public class GameShopContextOperations : IDisposable, IGameShopRepository
     {
         readonly ShopContext context = new();
 
-        public IShopRepository()
+        public GameShopContextOperations()
         {
 
         }
@@ -42,7 +53,7 @@ namespace WPFGameShop
         }
 
 
-        ~IShopRepository() => Dispose();
+        ~GameShopContextOperations() => Dispose();
 
 
         public void SaveChanges(IEnumerable<GameModel> gameModels)

@@ -3,15 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFGameShop" xmlns:wpfcontrollibrary="clr-namespace:WpfControlLibrary;assembly=UserControls"
+	    xmlns:wpfcontrollibrary="clr-namespace:WpfControlLibrary;assembly=UserControls"
 		mc:Ignorable="d"
+		
         Title="GameListWindow" Height="450" Width="800">
 	<Window.DataContext>
 		<Binding RelativeSource="{RelativeSource Self}"/>
 	</Window.DataContext>
+	<Window.Resources>
+		<SolidColorBrush x:Key="Background" Color="PaleVioletRed" Opacity="0.3"/>
+	</Window.Resources>
 
 
-	<Grid>
+
+
+	<Grid Background="{StaticResource Background}" >
 		<TabControl TabStripPlacement="Left">
 			<TabControl.Resources>
 				<Style TargetType="{x:Type TabItem}">
@@ -35,7 +41,7 @@
 			<TabItem Header="{DynamicResource settings}" >
 				<StackPanel Orientation="Vertical">
 					<wpfcontrollibrary:ThemesControl ItemsSource="{Binding ThemeViewModel.Themes}"/>
-					<wpfcontrollibrary:LangControl ItemsSource="{Binding LanguageViewModel.Themes}"/>
+					<wpfcontrollibrary:LangControl ItemsSource="{Binding LanguageViewModel.Language}"/>
 
 				</StackPanel>
 				

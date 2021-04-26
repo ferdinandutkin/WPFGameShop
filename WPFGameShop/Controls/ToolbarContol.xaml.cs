@@ -30,7 +30,7 @@ namespace WPFGameShop
 
         public ICommand NewCommand
         {
-            get => (ICommand)GetValue(NewCommandProperty);
+            get => GetValue(NewCommandProperty) as ICommand;
             set => SetValue(NewCommandProperty, value);
         }
 
@@ -39,7 +39,7 @@ namespace WPFGameShop
 
         public ICommand DeleteCommand
         {
-            get => (ICommand)GetValue(DeleteCommandProperty);
+            get => GetValue(DeleteCommandProperty) as ICommand;
             set => SetValue(DeleteCommandProperty, value);
         }
 
@@ -49,24 +49,9 @@ namespace WPFGameShop
 
         public ICommand SaveChangesCommand
         {
-            get => (ICommand)GetValue(SaveChangesCommandProperty);
+            get => GetValue(SaveChangesCommandProperty) as ICommand;
             set => SetValue(SaveChangesCommandProperty, value);
         }
- 
-
-     
-
-
-        //public static readonly DependencyProperty CommandProperty =
-        //  DependencyProperty.Register(nameof(Command), typeof(ICommand), typeof(ToolbarContol));
-
-
-        //public ICommand Command
-        //{
-        //    get => (ICommand)GetValue(CommandProperty);
-        //    set => SetValue(CommandProperty, value);
-        //}
-
 
 
         public ToolbarContol()

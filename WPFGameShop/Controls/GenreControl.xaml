@@ -95,7 +95,7 @@
 				<ListBox Grid.Row="1"   x:Name="TotalListBox"  ItemsSource="{Binding AllGenresSource}">
 					<ListBox.ItemContainerStyle>
 						<Style  TargetType="{x:Type ListBoxItem}">
-							<EventSetter Event="PreviewMouseMove" Handler="ListBox_PreviewMouseLeftButtonDown"/>
+							<EventSetter Event="PreviewMouseMove"   Handler="ListBox_PreviewMouseLeftButtonDown"/>
 						</Style>
 					</ListBox.ItemContainerStyle>
 					
